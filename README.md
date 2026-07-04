@@ -30,8 +30,8 @@ chmod +x tchebit-news-mcp-client-<platform>
 ### 3. Configure your environment
 
 ```
-TCHEBIT_API_URL     default https://newsletter-api.tchebit.com
-TCHEBIT_API_TOKEN   required — your MCP key
+TCHEBIT_API_URL   default https://newsletter-api.tchebit.com
+TCHEBIT_API_KEY   required — your MCP key
 ```
 
 ### 4. Install in Claude
@@ -44,7 +44,7 @@ TCHEBIT_API_TOKEN   required — your MCP key
     "tchebit": {
       "command": "/absolute/path/to/tchebit-news-mcp-client",
       "env": {
-        "TCHEBIT_API_TOKEN": "<your MCP key>"
+        "TCHEBIT_API_KEY": "<your MCP key>"
       }
     }
   }
@@ -58,7 +58,7 @@ runs automatically.)
 **Claude Code**:
 
 ```bash
-export TCHEBIT_API_TOKEN=<your MCP key>
+export TCHEBIT_API_KEY=<your MCP key>
 claude mcp add tchebit -- /absolute/path/to/tchebit-news-mcp-client
 ```
 

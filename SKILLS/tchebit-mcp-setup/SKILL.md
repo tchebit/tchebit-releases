@@ -70,7 +70,7 @@ arg — it's not something separate to install, just the default behavior.
 claude mcp add tchebit -- <absolute-path-to-binary>
 ```
 
-Then set `TCHEBIT_API_TOKEN` for that server — if `claude mcp add` in the
+Then set `TCHEBIT_API_KEY` for that server — if `claude mcp add` in the
 user's installed version doesn't support an inline env flag, fall back to
 writing the project or user MCP config file directly with:
 
@@ -79,7 +79,7 @@ writing the project or user MCP config file directly with:
   "mcpServers": {
     "tchebit": {
       "command": "<absolute-path-to-binary>",
-      "env": { "TCHEBIT_API_TOKEN": "<their key>" }
+      "env": { "TCHEBIT_API_KEY": "<their key>" }
     }
   }
 }
