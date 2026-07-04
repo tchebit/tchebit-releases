@@ -1,6 +1,6 @@
 ---
 name: tchebit-mcp-setup
-description: Install and configure the Tchê Bit news MCP (tchebit-news-mcp-client) for Claude Code or Claude Desktop — downloads the right binary, verifies its checksum, and wires it up with the user's MCP key. Use when the user asks to set up, install, or configure the Tchê Bit MCP, add tchebit to Claude, search Tchê Bit news/newsletters from Claude, or mentions an MCP key from tchebit.com / Settings → MCP Keys.
+description: Install and configure the Tchê Bit news MCP (tchebit-news-mcp-client) for Claude Code or Claude Desktop — downloads the right binary, verifies its checksum, and wires it up with the user's MCP key. Use when the user asks to set up, install, or configure the Tchê Bit MCP, add tchebit to Claude, search Tchê Bit news/newsletters from Claude, or mentions an MCP key from tchebit.com / Account / MCP Keys.
 ---
 
 # Tchê Bit MCP setup
@@ -15,8 +15,9 @@ detect yourself; don't guess at their MCP key or install location.
 ## 1. Confirm the user has an MCP key
 
 Every tier — including Free — needs one. If they don't have one yet, tell
-them: connect your wallet at tchebit.com, then create a key under
-**Settings → MCP Keys**. Wait for them to paste it before continuing. Treat
+them: connect your wallet at tchebit.com, click your wallet address (top
+right) to open the dropdown, go to **Account**, and create a key under
+**MCP Keys**. Wait for them to paste it before continuing. Treat
 the key as a secret — don't print it back in full, don't log it, don't put
 it in a shell history-visible command if you can avoid it (prefer writing it
 into a config file directly over `export KEY=...` on the command line).

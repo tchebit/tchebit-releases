@@ -11,9 +11,10 @@ binary for your platform from the [Releases](../../releases) page.
 ### 1. Get an MCP key
 
 Every tier — including **Free** — needs a Tchê Bit account. Connect your
-wallet at [tchebit.com](https://tchebit.com), then create a key under
-**Settings → MCP Keys**. Every logged-in account gets a Free-tier key by
-default; no separate signup is required to try it.
+wallet at [tchebit.com](https://tchebit.com), click your wallet address
+(top right) to open the dropdown, go to **Account**, and create a key under
+**MCP Keys**. Every logged-in account gets a Free-tier key by default; no
+separate signup is required to try it.
 
 ### 2. Download and verify
 
