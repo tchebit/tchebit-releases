@@ -42,7 +42,6 @@ TCHEBIT_API_TOKEN   required — your MCP key
   "mcpServers": {
     "tchebit": {
       "command": "/absolute/path/to/tchebit-news-mcp-client",
-      "args": ["serve"],
       "env": {
         "TCHEBIT_API_TOKEN": "<your MCP key>"
       }
@@ -51,11 +50,15 @@ TCHEBIT_API_TOKEN   required — your MCP key
 }
 ```
 
+(No `args` needed — the binary serves over stdio by default when run with no
+subcommand; `serve` and `sync` are the only subcommands, and `serve` is what
+runs automatically.)
+
 **Claude Code**:
 
 ```bash
 export TCHEBIT_API_TOKEN=<your MCP key>
-claude mcp add tchebit -- /absolute/path/to/tchebit-news-mcp-client serve
+claude mcp add tchebit -- /absolute/path/to/tchebit-news-mcp-client
 ```
 
 Using Claude Code? [`SKILLS/tchebit-mcp-setup`](SKILLS/tchebit-mcp-setup) is a

@@ -58,10 +58,15 @@ there, and `chmod +x` it.
 
 ## 3. Configure the MCP client
 
+The binary takes no required arguments — running it with no subcommand
+serves over stdio by default (`serve` and `sync` are the only two
+subcommands; `serve` is what runs automatically). Don't add `serve` as an
+arg — it's not something separate to install, just the default behavior.
+
 **Claude Code** (preferred if this skill is running inside Claude Code):
 
 ```bash
-claude mcp add tchebit -- <absolute-path-to-binary> serve
+claude mcp add tchebit -- <absolute-path-to-binary>
 ```
 
 Then set `TCHEBIT_API_TOKEN` for that server — if `claude mcp add` in the
@@ -73,7 +78,6 @@ writing the project or user MCP config file directly with:
   "mcpServers": {
     "tchebit": {
       "command": "<absolute-path-to-binary>",
-      "args": ["serve"],
       "env": { "TCHEBIT_API_TOKEN": "<their key>" }
     }
   }
