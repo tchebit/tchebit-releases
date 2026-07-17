@@ -1,12 +1,14 @@
 ---
 name: tchebit-mcp-setup
-description: Install and configure the Tchê Bit news MCP (tchebit-news-mcp-client) for Claude Code or Claude Desktop — downloads the right binary, verifies its checksum, and wires it up with the user's MCP key. Use when the user asks to set up, install, or configure the Tchê Bit MCP, add tchebit to Claude, search Tchê Bit news/newsletters from Claude, or mentions an MCP key from tchebit.com / Account / MCP Keys.
+description: Install and configure the Tchê Bit MCP (tchebit-mcp-client) for Claude Code or Claude Desktop — downloads the right binary, verifies its checksum, and wires it up with the user's MCP key. Use when the user asks to set up, install, or configure the Tchê Bit MCP, add tchebit to Claude, search Tchê Bit news/newsletters, check market/perps data from Claude, or mentions an MCP key from tchebit.com / Account / MCP Keys.
 ---
 
 # Tchê Bit MCP setup
 
-Installs `tchebit-news-mcp-client` — semantic search over Tchê Bit news,
-newsletters, and premium editions, run locally as an MCP server over stdio.
+Installs `tchebit-mcp-client` (renamed 2026-07-16 from
+`tchebit-news-mcp-client`) — semantic search over Tchê Bit news, newsletters,
+and premium editions, plus live market data and (Premium/Pro) perps agent
+tools, run locally as an MCP server over stdio.
 Repo: https://github.com/tchebit/tchebit-releases
 
 Work through these steps in order. Ask the user for anything you can't
@@ -34,12 +36,12 @@ Determine OS + arch (e.g. `uname -sm`), then map to the release asset name:
 | macOS   | x86_64  | `darwin-x86_64`         |
 | Windows | x86_64  | `windows-x86_64.exe`    |
 
-Download the matching `tchebit-news-mcp-client-<suffix>` and `SHA256SUMS.txt`
+Download the matching `tchebit-mcp-client-<suffix>` and `SHA256SUMS.txt`
 from the latest release:
 
 ```bash
-curl -fsSL -o tchebit-news-mcp-client \
-  https://github.com/tchebit/tchebit-releases/releases/latest/download/tchebit-news-mcp-client-<suffix>
+curl -fsSL -o tchebit-mcp-client \
+  https://github.com/tchebit/tchebit-releases/releases/latest/download/tchebit-mcp-client-<suffix>
 curl -fsSL -o SHA256SUMS.txt \
   https://github.com/tchebit/tchebit-releases/releases/latest/download/SHA256SUMS.txt
 ```
@@ -54,8 +56,12 @@ If verification fails, stop and tell the user — do not proceed with an
 unverified binary.
 
 Pick an install location (ask the user, or default to
-`~/.local/bin/tchebit-news-mcp-client` on Linux/macOS), move the binary
+`~/.local/bin/tchebit-mcp-client` on Linux/macOS), move the binary
 there, and `chmod +x` it.
+
+Releases tagged before 2026-07-16 (v0.1.0–v0.1.2) still ship binaries named
+`tchebit-news-mcp-client-<suffix>` — only relevant if the user explicitly
+wants an old version; the latest release always uses the new name.
 
 ## 3. Configure the MCP client
 
@@ -95,6 +101,15 @@ entries — don't overwrite the whole file.
 `TCHEBIT_API_URL` doesn't need to be set — it defaults to
 `https://newsletter-api.tchebit.com` (production).
 
+### Optional: limit to a toolset
+
+If the user only wants one family of tools loaded (`news`, `market`,
+`perps`), pass `--toolsets` as an extra arg on the command, or set
+`TCHEBIT_MCP_TOOLSETS` in the same env block as `TCHEBIT_API_KEY` (e.g.
+`"news,market"`). Default is all three families (still tier-gated per the
+table in step "Hard limits" below). Only suggest this if the user asks to
+restrict scope — most users want everything enabled.
+
 ## 4. Smoke test
 
 Restart Claude Code / Claude Desktop if required for the new MCP server to
@@ -106,6 +121,14 @@ env config — re-check step 3, not step 2.
 ## Hard limits (tell the user if relevant)
 
 `/feed/semantic-sync` (the client's local-cache refresh) is rate-limited per
-tier: Free 10/hour, Premium 120/hour, Pro 240/hour. This is not a per-search
+tier: Free 30/hour, Premium 120/hour, Pro 240/hour. This is not a per-search
 limit — search runs offline against the local cache. Free tier does not sync
 premium editions (The Setup / Money Flow / Scorecard); Premium and Pro do.
+
+`market` tools: Free gets asset price only; Premium/Pro get the full set
+(funding table, macro read). `perps` tools (agent-support: funding scan,
+oracle price, unwind signal, depth check, position health) are Premium/Pro
+only — Pro adds depth-check and position-health on top of what Premium gets.
+`perps` calls run on their **own** separate rate budget (Premium 120/hour,
+Pro 600/hour) — it does not share or compete with the semantic-sync budget
+above.
